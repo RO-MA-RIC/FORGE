@@ -38,3 +38,45 @@ export interface MetabolicCalculation {
   flooredBySafetyLimit: boolean
   macros: Macros
 }
+
+export type MuscleGroup = 'pectoraux' | 'dos' | 'epaules' | 'biceps' | 'triceps' | 'jambes' | 'abdominaux'
+
+export interface Exercise {
+  id: string
+  name: string
+  muscleGroup: MuscleGroup
+  defaultRepRangeMin: number
+  defaultRepRangeMax: number
+}
+
+export interface ProgramExercise {
+  exerciseId: string
+  sets: number
+}
+
+export interface ProgramDay {
+  id: string
+  label: string
+  exercises: ProgramExercise[]
+}
+
+export interface ProgramTemplate {
+  trainingDaysPerWeek: TrainingDaysPerWeek
+  days: ProgramDay[]
+}
+
+export interface GeneratedProgramExercise {
+  exercise: Exercise
+  sets: number
+}
+
+export interface GeneratedProgramDay {
+  id: string
+  label: string
+  exercises: GeneratedProgramExercise[]
+  hasCardioFinisher: boolean
+}
+
+export interface GeneratedProgram {
+  days: GeneratedProgramDay[]
+}
