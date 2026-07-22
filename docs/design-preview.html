@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORGE — Design Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@700,800&display=swap">
+<style>
+  :root {
+    --accent: #E8531E;
+    --accent-dim: #B8431A;
+    --bg: #0B0B0D;
+    --surface: #17171A;
+    --surface-2: #1F1F23;
+    --border: #2A2A2E;
+    --text: #F5F4F1;
+    --text-muted: #9A9A9E;
+    --protein: #4C9FE8;
+    --carbs: #E8A33D;
+    --fat: #B98CE8;
+    --success: #3FB950;
+    --warning: #E8A33D;
+    --error: #E5484D;
+    --info: #4C9FE8;
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-full: 9999px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Geist', system-ui, sans-serif;
+    line-height: 1.5;
+    padding: 0 0 96px 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 64px 24px;
+  }
+
+  section + section {
+    border-top: 1px solid var(--border);
+    margin-top: 64px;
+    padding-top: 64px;
+  }
+
+  h1.hero {
+    font-family: 'Cabinet Grotesk', sans-serif;
+    font-weight: 800;
+    font-size: clamp(48px, 9vw, 96px);
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    margin-bottom: 8px;
+  }
+
+  .hero-sub {
+    color: var(--text-muted);
+    font-size: 18px;
+    margin-bottom: 40px;
+  }
+
+  .section-label {
+    font-family: 'Geist Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  /* --- Section 1: Type specimen --- */
+  .specimen-block { margin-bottom: 40px; }
+  .specimen-role {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .specimen-display {
+    font-family: 'Cabinet Grotesk', sans-serif;
+    font-weight: 800;
+    font-size: 56px;
+    letter-spacing: -0.01em;
+  }
+  .specimen-body {
+    font-family: 'Geist', sans-serif;
+    font-size: 17px;
+    max-width: 640px;
+    color: var(--text);
+  }
+  .specimen-body-muted {
+    color: var(--text-muted);
+    font-size: 15px;
+    max-width: 640px;
+    margin-top: 8px;
+  }
+
+  table.data-table {
+    width: 100%;
+    max-width: 520px;
+    border-collapse: collapse;
+    font-family: 'Geist Mono', monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 14px;
+  }
+  table.data-table th {
+    text-align: left;
+    color: var(--text-muted);
+    font-weight: 500;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  table.data-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  table.data-table tr:last-child td { border-bottom: none; }
+
+  .code-snippet {
+    font-family: 'Geist Mono', monospace;
+    font-size: 13px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    color: var(--text-muted);
+    max-width: 560px;
+    overflow-x: auto;
+  }
+  .code-snippet .kw { color: var(--accent); }
+  .code-snippet .num { color: var(--protein); }
+
+  /* --- Section 2: Palette --- */
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .swatch {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .swatch-color { height: 72px; }
+  .swatch-label {
+    padding: 10px 12px;
+    background: var(--surface);
+  }
+  .swatch-name { font-size: 13px; font-weight: 600; }
+  .swatch-hex {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .component-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 32px;
+  }
+  .component-group { margin-bottom: 8px; }
+  .component-group-label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .btn {
+    font-family: 'Geist', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 20px;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 8px 8px 0;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-secondary { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+  .btn-ghost { background: transparent; color: var(--text-muted); }
+
+  .field { margin-bottom: 14px; }
+  .field label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .field input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 11px 14px;
+    color: var(--text);
+    font-family: 'Geist Mono', monospace;
+    font-size: 14px;
+  }
+  .field input:focus { outline: none; border-color: var(--accent); }
+  .field.error input { border-color: var(--error); }
+  .field-error-msg { color: var(--error); font-size: 12px; margin-top: 6px; }
+
+  .alert {
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    margin-bottom: 10px;
+    border-left: 3px solid;
+  }
+  .alert-success { background: rgba(63,185,80,0.1); border-color: var(--success); color: var(--success); }
+  .alert-warning { background: rgba(232,163,61,0.1); border-color: var(--warning); color: var(--warning); }
+  .alert-error { background: rgba(229,72,77,0.1); border-color: var(--error); color: var(--error); }
+  .alert-info { background: rgba(76,159,232,0.1); border-color: var(--info); color: var(--info); }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+  }
+  .card-title { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
+  .card-value { font-family: 'Geist Mono', monospace; font-size: 32px; font-weight: 600; }
+
+  /* --- Section 3: Mockup --- */
+  .phone-frame {
+    width: 375px;
+    max-width: 100%;
+    margin: 0 auto;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 36px;
+    padding: 16px;
+    box-shadow: 0 40px 80px -20px rgba(0,0,0,0.6);
+  }
+  .phone-screen {
+    background: var(--bg);
+    border-radius: 24px;
+    overflow: hidden;
+    min-height: 720px;
+    display: flex;
+    flex-direction: column;
+  }
+  .app-header {
+    padding: 24px 20px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .app-header .greeting { font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .app-header .date { font-size: 13px; color: var(--text-muted); }
+  .app-body { padding: 0 20px; flex: 1; }
+
+  .gauge-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .gauge-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+  .gauge-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+  .gauge-kcal { font-family: 'Geist Mono', monospace; font-size: 36px; font-weight: 600; }
+  .gauge-kcal span { font-size: 15px; color: var(--text-muted); font-weight: 400; }
+  .gauge-ring {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: conic-gradient(var(--accent) 0deg 245deg, var(--surface-2) 245deg 360deg);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .gauge-ring-inner {
+    width: 42px; height: 42px; border-radius: 50%; background: var(--surface);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600;
+  }
+  .macro-row { display: flex; gap: 12px; }
+  .macro-item { flex: 1; }
+  .macro-bar-bg { height: 4px; border-radius: 2px; background: var(--surface-2); margin-bottom: 6px; overflow: hidden; }
+  .macro-bar-fill { height: 100%; border-radius: 2px; }
+  .macro-label { font-size: 11px; color: var(--text-muted); }
+  .macro-value { font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 600; }
+
+  .stat-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .stat-tile-row { display: flex; justify-content: space-between; align-items: center; }
+  .stat-tile-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+  .stat-tile-value { font-size: 16px; font-weight: 600; }
+  .stat-tile-sub { font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--text-muted); }
+  .pill {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    background: rgba(232,83,30,0.15);
+    color: var(--accent);
+  }
+
+  .bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 14px 8px 18px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 10px; color: var(--text-muted); font-family: 'Geist Mono', monospace; }
+  .nav-item.active { color: var(--accent); }
+  .nav-dot { width: 20px; height: 20px; border-radius: 6px; background: var(--surface-2); }
+  .nav-item.active .nav-dot { background: var(--accent); }
+
+  .mockup-caption {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 20px;
+    font-family: 'Geist Mono', monospace;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1 class="hero">FORGE</h1>
+  <p class="hero-sub">Design system preview — nutrition &amp; entraînement, un seul outil de confiance.</p>
+
+  <!-- SECTION 1: TYPE SPECIMEN -->
+  <section>
+    <span class="section-label">01 — Typographie</span>
+
+    <div class="specimen-block">
+      <div class="specimen-role">Display / Hero — Cabinet Grotesk 800</div>
+      <div class="specimen-display">FORGE</div>
+    </div>
+
+    <div class="specimen-block">
+      <div class="specimen-role">Body — Geist 400</div>
+      <p class="specimen-body">Ton objectif calorique du jour est de 2 340 kcal, réparties en 178g de protéines, 78g de lipides et 245g de glucides. Ta prochaine séance est Push — Jour 2, avec un finisher cardio de 15 minutes.</p>
+      <p class="specimen-body-muted">Formule de Mifflin-St Jeor appliquée à ton profil, ajustée selon ton niveau d'activité et ton objectif de perte de poids à 0,5 kg/semaine.</p>
+    </div>
+
+    <div class="specimen-block">
+      <div class="specimen-role">Data / Tables — Geist Mono, tabular-nums</div>
+      <table class="data-table">
+        <thead><tr><th>Série</th><th>Poids</th><th>Reps cible</th><th>Reps réalisées</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>82.5 kg</td><td>8–12</td><td>12</td></tr>
+          <tr><td>2</td><td>82.5 kg</td><td>8–12</td><td>12</td></tr>
+          <tr><td>3</td><td>82.5 kg</td><td>8–12</td><td>11</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="specimen-block">
+      <div class="specimen-role">Code — Geist Mono (cohérence, non utilisé en usage courant)</div>
+      <div class="code-snippet"><span class="kw">const</span> objectif = tdee <span class="kw">-</span> deficit(<span class="num">0.5</span>); <span class="kw">// kg/semaine</span></div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: PALETTE -->
+  <section>
+    <span class="section-label">02 — Palette &amp; composants</span>
+
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-color" style="background:#E8531E"></div><div class="swatch-label"><div class="swatch-name">Ember (accent)</div><div class="swatch-hex">#E8531E</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#0B0B0D"></div><div class="swatch-label"><div class="swatch-name">Background</div><div class="swatch-hex">#0B0B0D</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#17171A"></div><div class="swatch-label"><div class="swatch-name">Surface</div><div class="swatch-hex">#17171A</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#2A2A2E"></div><div class="swatch-label"><div class="swatch-name">Border</div><div class="swatch-hex">#2A2A2E</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#F5F4F1"></div><div class="swatch-label"><div class="swatch-name">Text primary</div><div class="swatch-hex">#F5F4F1</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#9A9A9E"></div><div class="swatch-label"><div class="swatch-name">Text muted</div><div class="swatch-hex">#9A9A9E</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#4C9FE8"></div><div class="swatch-label"><div class="swatch-name">Protéines</div><div class="swatch-hex">#4C9FE8</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#E8A33D"></div><div class="swatch-label"><div class="swatch-name">Glucides</div><div class="swatch-hex">#E8A33D</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#B98CE8"></div><div class="swatch-label"><div class="swatch-name">Lipides</div><div class="swatch-hex">#B98CE8</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#3FB950"></div><div class="swatch-label"><div class="swatch-name">Success</div><div class="swatch-hex">#3FB950</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#E5484D"></div><div class="swatch-label"><div class="swatch-name">Error</div><div class="swatch-hex">#E5484D</div></div></div>
+    </div>
+
+    <div class="component-grid">
+      <div>
+        <div class="component-group-label">Boutons</div>
+        <div class="component-group">
+          <button class="btn btn-primary">Valider la séance</button>
+          <button class="btn btn-secondary">Remplacer l'exercice</button>
+          <button class="btn btn-ghost">Annuler</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="component-group-label">Champs</div>
+        <div class="field">
+          <label>Poids (kg)</label>
+          <input type="text" value="82.5">
+        </div>
+        <div class="field error">
+          <label>Répétitions</label>
+          <input type="text" value="">
+          <div class="field-error-msg">Indique le nombre de répétitions réalisées</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="component-group-label">Alertes</div>
+        <div class="alert alert-success">Progression : +2,5 kg proposé au prochain développé couché</div>
+        <div class="alert-warning alert">Objectif calorique proche du plancher de sécurité</div>
+        <div class="alert-error alert">Poids hors plage réaliste, vérifie la saisie</div>
+        <div class="alert-info alert">Nouvel aliment ajouté à ta liste personnalisée</div>
+      </div>
+
+      <div>
+        <div class="component-group-label">Card</div>
+        <div class="card">
+          <div class="card-title">Poids actuel</div>
+          <div class="card-value">78.4 <span style="font-size:16px;color:var(--text-muted)">kg</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: MOCKUP -->
+  <section>
+    <span class="section-label">03 — Écran d'accueil</span>
+
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <div class="app-header">
+          <div>
+            <div class="greeting">Mardi 22 juillet</div>
+          </div>
+          <div class="pill">Push — Jour 2</div>
+        </div>
+
+        <div class="app-body">
+          <div class="gauge-card">
+            <div class="gauge-top">
+              <div>
+                <div class="gauge-label">Calories restantes</div>
+                <div class="gauge-kcal">1 240 <span>/ 2 340 kcal</span></div>
+              </div>
+              <div class="gauge-ring"><div class="gauge-ring-inner">68%</div></div>
+            </div>
+            <div class="macro-row">
+              <div class="macro-item">
+                <div class="macro-bar-bg"><div class="macro-bar-fill" style="width:72%;background:var(--protein)"></div></div>
+                <div class="macro-label">Prot.</div>
+                <div class="macro-value">128 / 178g</div>
+              </div>
+              <div class="macro-item">
+                <div class="macro-bar-bg"><div class="macro-bar-fill" style="width:54%;background:var(--carbs)"></div></div>
+                <div class="macro-label">Gluc.</div>
+                <div class="macro-value">132 / 245g</div>
+              </div>
+              <div class="macro-item">
+                <div class="macro-bar-bg"><div class="macro-bar-fill" style="width:61%;background:var(--fat)"></div></div>
+                <div class="macro-label">Lip.</div>
+                <div class="macro-value">48 / 78g</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-tile">
+            <div class="stat-tile-row">
+              <div>
+                <div class="stat-tile-label">Prochaine séance</div>
+                <div class="stat-tile-value">Push — Développé, épaules, triceps</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-tile">
+            <div class="stat-tile-row">
+              <div>
+                <div class="stat-tile-label">Poids</div>
+                <div class="stat-tile-value">78.4 kg</div>
+              </div>
+              <div class="stat-tile-sub">-3.6 kg → objectif 72 kg</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-nav">
+          <div class="nav-item active"><div class="nav-dot"></div>Accueil</div>
+          <div class="nav-item"><div class="nav-dot"></div>Nutrition</div>
+          <div class="nav-item"><div class="nav-dot"></div>Sport</div>
+          <div class="nav-item"><div class="nav-dot"></div>Progrès</div>
+          <div class="nav-item"><div class="nav-dot"></div>Profil</div>
+        </div>
+      </div>
+    </div>
+    <div class="mockup-caption">Écran Accueil — jauge calorique, macros, prochaine séance, résumé du poids</div>
+  </section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "skills": {
+    "branche": {
+      "source": "naiersaidane/claude-mastery",
+      "sourceType": "github",
+      "skillPath": "skills/branche/SKILL.md",
+      "computedHash": "a88453cdcf96fb3c041fc5a2406b2628dc3e2d5b52c338705669a75b6098e9a2"
+    },
+    "cadre": {
+      "source": "naiersaidane/claude-mastery",
+      "sourceType": "github",
+      "skillPath": "skills/cadre/SKILL.md",
+      "computedHash": "3ceb6c388cb2c631b7d63e28d265f6fd55d7afcdc09ea0fe2ef0ce8205a029e2"
+    },
+    "design": {
+      "source": "naiersaidane/claude-mastery",
+      "sourceType": "github",
+      "skillPath": "skills/design/SKILL.md",
+      "computedHash": "43ab7981ad12b1a25c5df024105e81cd4e88cc9f11ea8e76b0845fa93c5b90a9"
+    },
+    "illustre": {
+      "source": "naiersaidane/claude-mastery",
+      "sourceType": "github",
+      "skillPath": "skills/illustre/SKILL.md",
+      "computedHash": "401c878c10602318b4afe69e5ab14ea70641684911a014f8942adb14c8b9d0ce"
+    },
+    "interroge": {
+      "source": "naiersaidane/claude-mastery",
+      "sourceType": "github",
+      "skillPath": "skills/interroge/SKILL.md",
+      "computedHash": "848da40cf3e1b9dc389dbd0ee55c056946d62ce40714c7abb9b23128d7ef568c"
+    },
+    "investigue": {
+      "source": "naiersaidane/claude-mastery",
+      "sourceType": "github",
+      "skillPath": "skills/investigue/SKILL.md",
+      "computedHash": "19845b9f627fe0e59a6f08bb7c50d3b6fa92d7f3f59a84e539b45a832c5c0121"
+    },
+    "livre": {
+      "source": "naiersaidane/claude-mastery",
+      "sourceType": "github",
+      "skillPath": "skills/livre/SKILL.md",
+      "computedHash": "a5e8f024b03b14e790fa80bd7923eacd66b5233ca207ad9b0697aac41ec32957"
+    },
+    "planifie": {
+      "source": "naiersaidane/claude-mastery",
+      "sourceType": "github",
+      "skillPath": "skills/planifie/SKILL.md",
+      "computedHash": "3a4c8ec835fcaf58e940666b3e3bec9dca792e02b61c7936c941626de128a8b2"
+    }
+  }
+}
