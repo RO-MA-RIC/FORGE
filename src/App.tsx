@@ -1,0 +1,48 @@
+import { useState } from 'react'
+import { BottomNav, type TabId } from './components/layout/BottomNav'
+import { StubScreen } from './components/ui/StubScreen'
+import { OnboardingScreen } from './features/profile/OnboardingScreen'
+import { ProfilScreen } from './features/profile/ProfilScreen'
+import { useProfile } from './hooks/useProfile'
+
+export default function App() {
+  const { state, createProfile, updateProfile } = useProfile()
+  const [activeTab, setActiveTab] = useState<TabId>('accueil')
+
+  if (state.status === 'loading') {
+    return null
+  }
+
+  if (state.status === 'empty') {
+    return <OnboardingScreen onComplete={createProfile} />
+  }
+
+  const { profile } = state
+
+  return (
+    <div className="app-shell">
+      <div className="app-header">
+        <h1>FORGE</h1>
+      </div>
+
+      {activeTab === 'accueil' && (
+        <StubScreen
+          title="Accueil"
+          message="La jauge calorique, la prochaine séance et le résumé du poids arriveront dans une prochaine phase."
+        />
+      )}
+      {activeTab === 'nutrition' && (
+        <StubScreen title="Nutrition" message="Le journal alimentaire arrivera dans une prochaine phase." />
+      )}
+      {activeTab === 'sport' && (
+        <StubScreen title="Sport" message="Le programme d'entraînement arrivera dans une prochaine phase." />
+      )}
+      {activeTab === 'progres' && (
+        <StubScreen title="Progrès" message="Le suivi de poids arrivera dans une prochaine phase." />
+      )}
+      {activeTab === 'profil' && <ProfilScreen profile={profile} onUpdate={updateProfile} />}
+
+      <BottomNav active={activeTab} onChange={setActiveTab} />
+    </div>
+  )
+}
