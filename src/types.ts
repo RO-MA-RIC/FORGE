@@ -113,3 +113,23 @@ export interface ExerciseSubstitution {
   originalExerciseId: string
   replacementExerciseId: string
 }
+
+export interface FoodItem {
+  id: string
+  name: string
+  kcal: number
+  proteinG: number
+  carbsG: number
+  fatG: number
+}
+
+export interface FoodLogEntry {
+  id: string
+  /** Date locale au format YYYY-MM-DD */
+  date: string
+  foodName: string
+  kcal: number
+  proteinG: number
+  carbsG: number
+  fatG: number
+}
