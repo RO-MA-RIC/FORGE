@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { BottomNav, type TabId } from './components/layout/BottomNav'
-import { StubScreen } from './components/ui/StubScreen'
+import { AccueilScreen } from './features/accueil/AccueilScreen'
 import { NutritionScreen } from './features/nutrition/NutritionScreen'
 import { OnboardingScreen } from './features/profile/OnboardingScreen'
-import { ProgresScreen } from './features/progres/ProgresScreen'
 import { ProfilScreen } from './features/profile/ProfilScreen'
+import { ProgresScreen } from './features/progres/ProgresScreen'
 import { SportScreen } from './features/sport/SportScreen'
 import { useProfile } from './hooks/useProfile'
 
@@ -28,12 +28,7 @@ export default function App() {
         <h1>FORGE</h1>
       </div>
 
-      {activeTab === 'accueil' && (
-        <StubScreen
-          title="Accueil"
-          message="La jauge calorique, la prochaine séance et le résumé du poids arriveront dans une prochaine phase."
-        />
-      )}
+      {activeTab === 'accueil' && <AccueilScreen profile={profile} />}
       {activeTab === 'nutrition' && <NutritionScreen />}
       {activeTab === 'sport' && <SportScreen profile={profile} />}
       {activeTab === 'progres' && <ProgresScreen profile={profile} />}

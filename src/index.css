@@ -323,19 +323,6 @@ button {
   display: block;
 }
 
-.stub-screen {
-  color: var(--text-muted);
-  padding: var(--space-2xl) 0;
-  text-align: center;
-}
-
-.stub-screen h2 {
-  font-family: var(--font-display);
-  color: var(--text);
-  font-size: 22px;
-  margin-bottom: 8px;
-}
-
 /* --- Sport / exercises --- */
 
 .exercise-row {
@@ -613,4 +600,124 @@ button {
   width: 12px;
   height: 0;
   border-top: 1.5px dashed var(--text-muted);
+}
+
+/* --- Accueil --- */
+
+.gauge-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+
+.gauge-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.gauge-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.gauge-kcal {
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.gauge-kcal span {
+  font-size: 15px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.gauge-ring {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: conic-gradient(var(--accent) 0deg var(--gauge-angle, 0deg), var(--surface-2) var(--gauge-angle, 0deg) 360deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.gauge-ring-inner {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.macro-row {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.macro-row .macro-item {
+  flex: 1;
+}
+
+.macro-bar-bg {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--surface-2);
+  margin-bottom: 6px;
+  overflow: hidden;
+}
+
+.macro-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+}
+
+.pill {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  background: rgba(232, 83, 30, 0.15);
+  color: var(--accent);
+  display: inline-block;
+}
+
+.stat-tile {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.stat-tile-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-tile-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.stat-tile-value {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.stat-tile-sub {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
 }
