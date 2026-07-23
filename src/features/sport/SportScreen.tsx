@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react'
 import { generateProgram } from '../../lib/program'
+import { applySubstitutions } from '../../lib/substitutions'
+import { useExerciseSubstitutions } from '../../hooks/useExerciseSubstitutions'
 import { useWorkoutSessions } from '../../hooks/useWorkoutSessions'
 import type { Profile } from '../../types'
 import { ProgramDayCard } from './ProgramDayCard'
@@ -15,7 +17,12 @@ const VIEWS: { id: SportView; label: string }[] = [
 ]
 
 export function SportScreen({ profile }: { profile: Profile }) {
-  const program = useMemo(() => generateProgram(profile), [profile])
+  const baseProgram = useMemo(() => generateProgram(profile), [profile])
+  const { substitutions, substitute } = useExerciseSubstitutions()
+  const program = useMemo(
+    () => (substitutions ? applySubstitutions(baseProgram, substitutions) : baseProgram),
+    [baseProgram, substitutions],
+  )
   const todayDay = program.days[0]
   const { sessions, recordSession } = useWorkoutSessions()
   const [view, setView] = useState<SportView>('jour')
@@ -36,11 +43,11 @@ export function SportScreen({ profile }: { profile: Profile }) {
       </div>
 
       {view === 'jour' && sessions !== null && (
-        <SessionLogger day={todayDay} sessions={sessions} onValidate={recordSession} />
+        <SessionLogger day={todayDay} sessions={sessions} onValidate={recordSession} onSubstitute={substitute} />
       )}
 
       {view === 'programme' &&
-        program.days.map((day) => <ProgramDayCard key={day.id} day={day} />)}
+        program.days.map((day) => <ProgramDayCard key={day.id} day={day} onSubstitute={substitute} />)}
 
       {view === 'historique' && sessions !== null && <SessionHistory sessions={sessions} />}
     </div>

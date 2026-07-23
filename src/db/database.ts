@@ -1,9 +1,13 @@
 import { openDB, type DBSchema, type IDBPDatabase } from 'idb'
-import type { Profile, WorkoutSession } from '../types'
+import type { ExerciseSubstitution, Profile, WorkoutSession } from '../types'
 
 const DB_NAME = 'forge-coach'
-const DB_VERSION = 2
+const DB_VERSION = 3
 const PROFILE_KEY = 'singleton'
+
+interface StoredSubstitution extends ExerciseSubstitution {
+  id: string
+}
 
 interface ForgeDB extends DBSchema {
   profile: {
@@ -13,6 +17,10 @@ interface ForgeDB extends DBSchema {
   workoutSessions: {
     key: string
     value: WorkoutSession
+  }
+  exerciseSubstitutions: {
+    key: string
+    value: StoredSubstitution
   }
 }
 
@@ -27,6 +35,9 @@ function getDB(): Promise<IDBPDatabase<ForgeDB>> {
         }
         if (oldVersion < 2) {
           db.createObjectStore('workoutSessions', { keyPath: 'id' })
+        }
+        if (oldVersion < 3) {
+          db.createObjectStore('exerciseSubstitutions', { keyPath: 'id' })
         }
       },
     })
@@ -52,4 +63,15 @@ export async function getWorkoutSessions(): Promise<WorkoutSession[]> {
 export async function addWorkoutSession(session: WorkoutSession): Promise<void> {
   const db = await getDB()
   await db.add('workoutSessions', session)
+}
+
+export async function getSubstitutions(): Promise<ExerciseSubstitution[]> {
+  const db = await getDB()
+  return db.getAll('exerciseSubstitutions')
+}
+
+export async function saveSubstitution(substitution: ExerciseSubstitution): Promise<void> {
+  const db = await getDB()
+  const id = `${substitution.dayId}:${substitution.originalExerciseId}`
+  await db.put('exerciseSubstitutions', { ...substitution, id })
 }
