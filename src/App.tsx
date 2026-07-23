@@ -3,6 +3,7 @@ import { BottomNav, type TabId } from './components/layout/BottomNav'
 import { StubScreen } from './components/ui/StubScreen'
 import { OnboardingScreen } from './features/profile/OnboardingScreen'
 import { ProfilScreen } from './features/profile/ProfilScreen'
+import { SportScreen } from './features/sport/SportScreen'
 import { useProfile } from './hooks/useProfile'
 
 export default function App() {
@@ -34,9 +35,7 @@ export default function App() {
       {activeTab === 'nutrition' && (
         <StubScreen title="Nutrition" message="Le journal alimentaire arrivera dans une prochaine phase." />
       )}
-      {activeTab === 'sport' && (
-        <StubScreen title="Sport" message="Le programme d'entraînement arrivera dans une prochaine phase." />
-      )}
+      {activeTab === 'sport' && <SportScreen profile={profile} />}
       {activeTab === 'progres' && (
         <StubScreen title="Progrès" message="Le suivi de poids arrivera dans une prochaine phase." />
       )}
