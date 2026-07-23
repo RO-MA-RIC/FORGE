@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { computeProgressionSuggestion } from '../../lib/progression'
-import type { GeneratedProgramDay, ProgressionSuggestion, SetLog, WorkoutSession } from '../../types'
+import type { ExerciseSubstitution, GeneratedProgramDay, ProgressionSuggestion, SetLog, WorkoutSession } from '../../types'
+import { SubstituteControl } from './SubstituteControl'
 
 interface DraftSet {
   weight: string
@@ -39,9 +40,10 @@ interface SessionLoggerProps {
   day: GeneratedProgramDay
   sessions: WorkoutSession[]
   onValidate: (session: WorkoutSession) => void
+  onSubstitute: (substitution: ExerciseSubstitution) => void
 }
 
-export function SessionLogger({ day, sessions, onValidate }: SessionLoggerProps) {
+export function SessionLogger({ day, sessions, onValidate, onSubstitute }: SessionLoggerProps) {
   const suggestions = useMemo<Suggestions>(() => {
     const result: Suggestions = {}
     for (const programExercise of day.exercises) {
@@ -97,12 +99,23 @@ export function SessionLogger({ day, sessions, onValidate }: SessionLoggerProps)
       {day.exercises.map((programExercise) => {
         const suggestion = suggestions[programExercise.exercise.id]
         return (
-          <div className="session-exercise" key={programExercise.exercise.id}>
+          <div className="session-exercise" key={programExercise.originalExerciseId}>
             <div className="exercise-name">{programExercise.exercise.name}</div>
             <div className="exercise-muscle">
               {programExercise.exercise.muscleGroup} · {programExercise.exercise.defaultRepRangeMin}-
               {programExercise.exercise.defaultRepRangeMax} reps
             </div>
+
+            <SubstituteControl
+              current={programExercise.exercise}
+              onSubstitute={(replacementExerciseId) =>
+                onSubstitute({
+                  dayId: day.id,
+                  originalExerciseId: programExercise.originalExerciseId,
+                  replacementExerciseId,
+                })
+              }
+            />
 
             {suggestion && <div className="progression-hint">{formatSuggestion(suggestion)}</div>}
 

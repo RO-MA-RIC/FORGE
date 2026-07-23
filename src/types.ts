@@ -68,6 +68,8 @@ export interface ProgramTemplate {
 export interface GeneratedProgramExercise {
   exercise: Exercise
   sets: number
+  /** Identifiant de l'exercice défini par le template, indépendant d'une éventuelle substitution */
+  originalExerciseId: string
 }
 
 export interface GeneratedProgramDay {
@@ -104,4 +106,10 @@ export interface ProgressionSuggestion {
   type: 'reps' | 'poids'
   suggestedWeightKg: number
   suggestedRepTarget: number
+}
+
+export interface ExerciseSubstitution {
+  dayId: string
+  originalExerciseId: string
+  replacementExerciseId: string
 }

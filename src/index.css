@@ -339,16 +339,36 @@ button {
 /* --- Sport / exercises --- */
 
 .exercise-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--space-md);
   padding: 10px 0;
   border-bottom: 1px solid var(--border);
 }
 
 .exercise-row:last-child {
   border-bottom: none;
+}
+
+.exercise-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.substitute-select {
+  margin-top: 8px;
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 7px 10px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 12px;
+}
+
+.substitute-select:focus {
+  outline: none;
+  border-color: var(--accent);
 }
 
 .exercise-name {
