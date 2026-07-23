@@ -1,14 +1,10 @@
 import { useWeightEntries } from '../../hooks/useWeightEntries'
 import { getTodayDateKey } from '../../lib/date'
+import { formatSigned } from '../../lib/format'
 import { computeWeightStats } from '../../lib/weightStats'
 import type { Profile } from '../../types'
 import { WeightChart } from './WeightChart'
 import { WeightForm } from './WeightForm'
-
-function formatSigned(value: number, decimals: number): string {
-  const rounded = value.toFixed(decimals)
-  return value > 0 ? `+${rounded}` : rounded
-}
 
 export function ProgresScreen({ profile }: { profile: Profile }) {
   const { entries, addEntry } = useWeightEntries()
