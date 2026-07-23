@@ -561,3 +561,56 @@ button {
   color: var(--text-muted);
   font-size: 13px;
 }
+
+/* --- Progrès / poids --- */
+
+.weight-chart {
+  width: 100%;
+  aspect-ratio: 5 / 2;
+  overflow: visible;
+}
+
+.weight-chart-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+}
+
+.weight-chart-dot {
+  fill: var(--accent);
+}
+
+.weight-chart-target {
+  stroke: var(--text-muted);
+  stroke-width: 0.6;
+  stroke-dasharray: 2 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.weight-chart-legend {
+  display: flex;
+  gap: var(--space-lg);
+  margin-top: var(--space-md);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.weight-chart-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.legend-dash {
+  width: 12px;
+  height: 0;
+  border-top: 1.5px dashed var(--text-muted);
+}

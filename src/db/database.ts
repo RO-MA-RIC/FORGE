@@ -1,8 +1,8 @@
 import { openDB, type DBSchema, type IDBPDatabase } from 'idb'
-import type { ExerciseSubstitution, FoodLogEntry, Profile, WorkoutSession } from '../types'
+import type { ExerciseSubstitution, FoodLogEntry, Profile, WeightEntry, WorkoutSession } from '../types'
 
 const DB_NAME = 'forge-coach'
-const DB_VERSION = 4
+const DB_VERSION = 5
 const PROFILE_KEY = 'singleton'
 
 interface StoredSubstitution extends ExerciseSubstitution {
@@ -26,6 +26,10 @@ interface ForgeDB extends DBSchema {
     key: string
     value: FoodLogEntry
   }
+  weightEntries: {
+    key: string
+    value: WeightEntry
+  }
 }
 
 let dbPromise: Promise<IDBPDatabase<ForgeDB>> | null = null
@@ -45,6 +49,9 @@ function getDB(): Promise<IDBPDatabase<ForgeDB>> {
         }
         if (oldVersion < 4) {
           db.createObjectStore('foodLog', { keyPath: 'id' })
+        }
+        if (oldVersion < 5) {
+          db.createObjectStore('weightEntries', { keyPath: 'id' })
         }
       },
     })
@@ -96,4 +103,14 @@ export async function addFoodLogEntry(entry: FoodLogEntry): Promise<void> {
 export async function removeFoodLogEntry(id: string): Promise<void> {
   const db = await getDB()
   await db.delete('foodLog', id)
+}
+
+export async function getWeightEntries(): Promise<WeightEntry[]> {
+  const db = await getDB()
+  return db.getAll('weightEntries')
+}
+
+export async function addWeightEntry(entry: WeightEntry): Promise<void> {
+  const db = await getDB()
+  await db.add('weightEntries', entry)
 }

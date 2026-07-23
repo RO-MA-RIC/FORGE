@@ -133,3 +133,18 @@ export interface FoodLogEntry {
   carbsG: number
   fatG: number
 }
+
+export interface WeightEntry {
+  id: string
+  /** Date locale au format YYYY-MM-DD */
+  date: string
+  weightKg: number
+}
+
+export interface WeightStats {
+  currentWeightKg: number
+  /** currentWeightKg - poids visé : positif si au-dessus de l'objectif */
+  gapToTargetKg: number
+  /** null si moins de deux pesées enregistrées */
+  observedRateKgPerWeek: number | null
+}
