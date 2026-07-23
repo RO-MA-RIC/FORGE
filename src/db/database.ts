@@ -1,8 +1,8 @@
 import { openDB, type DBSchema, type IDBPDatabase } from 'idb'
-import type { ExerciseSubstitution, Profile, WorkoutSession } from '../types'
+import type { ExerciseSubstitution, FoodLogEntry, Profile, WorkoutSession } from '../types'
 
 const DB_NAME = 'forge-coach'
-const DB_VERSION = 3
+const DB_VERSION = 4
 const PROFILE_KEY = 'singleton'
 
 interface StoredSubstitution extends ExerciseSubstitution {
@@ -22,6 +22,10 @@ interface ForgeDB extends DBSchema {
     key: string
     value: StoredSubstitution
   }
+  foodLog: {
+    key: string
+    value: FoodLogEntry
+  }
 }
 
 let dbPromise: Promise<IDBPDatabase<ForgeDB>> | null = null
@@ -38,6 +42,9 @@ function getDB(): Promise<IDBPDatabase<ForgeDB>> {
         }
         if (oldVersion < 3) {
           db.createObjectStore('exerciseSubstitutions', { keyPath: 'id' })
+        }
+        if (oldVersion < 4) {
+          db.createObjectStore('foodLog', { keyPath: 'id' })
         }
       },
     })
@@ -74,4 +81,19 @@ export async function saveSubstitution(substitution: ExerciseSubstitution): Prom
   const db = await getDB()
   const id = `${substitution.dayId}:${substitution.originalExerciseId}`
   await db.put('exerciseSubstitutions', { ...substitution, id })
+}
+
+export async function getFoodLogEntries(): Promise<FoodLogEntry[]> {
+  const db = await getDB()
+  return db.getAll('foodLog')
+}
+
+export async function addFoodLogEntry(entry: FoodLogEntry): Promise<void> {
+  const db = await getDB()
+  await db.add('foodLog', entry)
+}
+
+export async function removeFoodLogEntry(id: string): Promise<void> {
+  const db = await getDB()
+  await db.delete('foodLog', id)
 }

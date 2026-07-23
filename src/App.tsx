@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { BottomNav, type TabId } from './components/layout/BottomNav'
 import { StubScreen } from './components/ui/StubScreen'
+import { NutritionScreen } from './features/nutrition/NutritionScreen'
 import { OnboardingScreen } from './features/profile/OnboardingScreen'
 import { ProfilScreen } from './features/profile/ProfilScreen'
 import { SportScreen } from './features/sport/SportScreen'
@@ -32,9 +33,7 @@ export default function App() {
           message="La jauge calorique, la prochaine séance et le résumé du poids arriveront dans une prochaine phase."
         />
       )}
-      {activeTab === 'nutrition' && (
-        <StubScreen title="Nutrition" message="Le journal alimentaire arrivera dans une prochaine phase." />
-      )}
+      {activeTab === 'nutrition' && <NutritionScreen />}
       {activeTab === 'sport' && <SportScreen profile={profile} />}
       {activeTab === 'progres' && (
         <StubScreen title="Progrès" message="Le suivi de poids arrivera dans une prochaine phase." />
