@@ -99,3 +99,9 @@ export interface WorkoutSession {
   dayLabel: string
   exercises: WorkoutSessionExercise[]
 }
+
+export interface ProgressionSuggestion {
+  type: 'reps' | 'poids'
+  suggestedWeightKg: number
+  suggestedRepTarget: number
+}
