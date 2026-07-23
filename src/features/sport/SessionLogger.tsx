@@ -14,9 +14,9 @@ type Suggestions = Record<string, ProgressionSuggestion | null>
 function buildInitialDraft(day: GeneratedProgramDay, suggestions: Suggestions): DraftExercises {
   const draft: DraftExercises = {}
   for (const programExercise of day.exercises) {
-    const suggestion = suggestions[programExercise.exercise.id]
+    const suggestion = suggestions[programExercise.originalExerciseId]
     const suggestedWeight = suggestion ? String(suggestion.suggestedWeightKg) : ''
-    draft[programExercise.exercise.id] = Array.from({ length: programExercise.sets }, () => ({
+    draft[programExercise.originalExerciseId] = Array.from({ length: programExercise.sets }, () => ({
       weight: suggestedWeight,
       reps: '',
     }))
@@ -47,7 +47,7 @@ export function SessionLogger({ day, sessions, onValidate, onSubstitute }: Sessi
   const suggestions = useMemo<Suggestions>(() => {
     const result: Suggestions = {}
     for (const programExercise of day.exercises) {
-      result[programExercise.exercise.id] = computeProgressionSuggestion(programExercise.exercise, sessions)
+      result[programExercise.originalExerciseId] = computeProgressionSuggestion(programExercise.exercise, sessions)
     }
     return result
   }, [day, sessions])
@@ -59,17 +59,17 @@ export function SessionLogger({ day, sessions, onValidate, onSubstitute }: Sessi
     setDraft(buildInitialDraft(day, suggestions))
   }, [day, suggestions])
 
-  function setValue(exerciseId: string, setIndex: number, field: keyof DraftSet, value: string) {
+  function setValue(slotId: string, setIndex: number, field: keyof DraftSet, value: string) {
     setDraft((current) => {
-      const sets = [...current[exerciseId]]
+      const sets = [...current[slotId]]
       sets[setIndex] = { ...sets[setIndex], [field]: value }
-      return { ...current, [exerciseId]: sets }
+      return { ...current, [slotId]: sets }
     })
     setJustSaved(false)
   }
 
   const isComplete = day.exercises.every((programExercise) =>
-    draft[programExercise.exercise.id]?.every(isSetValid),
+    draft[programExercise.originalExerciseId]?.every(isSetValid),
   )
 
   function handleValidate() {
@@ -82,7 +82,7 @@ export function SessionLogger({ day, sessions, onValidate, onSubstitute }: Sessi
       dayLabel: day.label,
       exercises: day.exercises.map((programExercise) => ({
         exerciseId: programExercise.exercise.id,
-        sets: draft[programExercise.exercise.id].map(
+        sets: draft[programExercise.originalExerciseId].map(
           (set): SetLog => ({ weightKg: Number(set.weight), reps: Number(set.reps) }),
         ),
       })),
@@ -97,7 +97,8 @@ export function SessionLogger({ day, sessions, onValidate, onSubstitute }: Sessi
       <div className="card-title">{day.label}</div>
 
       {day.exercises.map((programExercise) => {
-        const suggestion = suggestions[programExercise.exercise.id]
+        const suggestion = suggestions[programExercise.originalExerciseId]
+        const slotSets = draft[programExercise.originalExerciseId]
         return (
           <div className="session-exercise" key={programExercise.originalExerciseId}>
             <div className="exercise-name">{programExercise.exercise.name}</div>
@@ -120,7 +121,7 @@ export function SessionLogger({ day, sessions, onValidate, onSubstitute }: Sessi
             {suggestion && <div className="progression-hint">{formatSuggestion(suggestion)}</div>}
 
             <div className="set-rows">
-              {draft[programExercise.exercise.id].map((set, index) => (
+              {slotSets?.map((set, index) => (
                 <div className="set-row" key={index}>
                   <span className="set-index mono-num">Série {index + 1}</span>
                   <input
@@ -129,14 +130,14 @@ export function SessionLogger({ day, sessions, onValidate, onSubstitute }: Sessi
                     step="0.5"
                     placeholder="kg"
                     value={set.weight}
-                    onChange={(e) => setValue(programExercise.exercise.id, index, 'weight', e.target.value)}
+                    onChange={(e) => setValue(programExercise.originalExerciseId, index, 'weight', e.target.value)}
                   />
                   <input
                     type="number"
                     inputMode="numeric"
                     placeholder={suggestion ? `${suggestion.suggestedRepTarget} reps` : 'reps'}
                     value={set.reps}
-                    onChange={(e) => setValue(programExercise.exercise.id, index, 'reps', e.target.value)}
+                    onChange={(e) => setValue(programExercise.originalExerciseId, index, 'reps', e.target.value)}
                   />
                 </div>
               ))}
