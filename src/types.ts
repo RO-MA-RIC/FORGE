@@ -80,3 +80,22 @@ export interface GeneratedProgramDay {
 export interface GeneratedProgram {
   days: GeneratedProgramDay[]
 }
+
+export interface SetLog {
+  weightKg: number
+  reps: number
+}
+
+export interface WorkoutSessionExercise {
+  exerciseId: string
+  sets: SetLog[]
+}
+
+export interface WorkoutSession {
+  id: string
+  /** ISO 8601 */
+  date: string
+  dayId: string
+  dayLabel: string
+  exercises: WorkoutSessionExercise[]
+}
