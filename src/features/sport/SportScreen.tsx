@@ -35,7 +35,9 @@ export function SportScreen({ profile }: { profile: Profile }) {
         ))}
       </div>
 
-      {view === 'jour' && <SessionLogger day={todayDay} onValidate={recordSession} />}
+      {view === 'jour' && sessions !== null && (
+        <SessionLogger day={todayDay} sessions={sessions} onValidate={recordSession} />
+      )}
 
       {view === 'programme' &&
         program.days.map((day) => <ProgramDayCard key={day.id} day={day} />)}
